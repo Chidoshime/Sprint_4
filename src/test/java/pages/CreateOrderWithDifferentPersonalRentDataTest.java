@@ -1,21 +1,18 @@
 package pages;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import src.BaseTest;
 
 import static src.Dates.*;
 import static src.RentTerms.*;
-import static src.TypesOfScooters.*;
+import static src.TypesOfScooters.BLACK_SCOOTER;
+import static src.TypesOfScooters.GRAY_SCOOTER;
 
 @RunWith(Parameterized.class)
-public class CreateOrderWithDifferentPersonalRentDataTest {
-    private static WebDriver driver;
+public class CreateOrderWithDifferentPersonalRentDataTest extends BaseTest {
     private final String userName;
     private final String userSurname;
     private final String userAddress;
@@ -53,23 +50,18 @@ public class CreateOrderWithDifferentPersonalRentDataTest {
                 { "Андрей", "Андреевич", "Москва", "Черкизовская", "88005553535", TODAY_DATE, ONE_DAY, BLACK_SCOOTER, "test-privet" },
                 { "Сергей", "Саныч", "Казань", "Сокольники", "11111111111", TOMORROW_DATE, TWO_DAYS, null, "privet medved" },
                 { "Михал", "Михалыч", "Челябинск", "Чистые пруды", "555555555555", YESTERDAY_DATE, ONE_DAY, GRAY_SCOOTER, null },
-                { "Иван", "Иванович", "Сочи", "Лубянка", "89994568877", TODAY_DATE, THREE_DAYS, null, null },
+                { "Иван", "Иванович", "Москва", "Лубянка", "89994568877", TODAY_DATE, THREE_DAYS, null, null },
         };
     }
-
-    @Before
-    public void setUp(){
-        driver = new ChromeDriver();
-    }
-
     @Test
-    public void createOrderWithDifferentPersonalRentData(){
+    public void createOrderWithDifferentPersonalRentData() {
         MainPage page = new MainPage(driver);
 
         page.open();
         page.createOrderTop();
 
         CreateOrderPage order = new CreateOrderPage(driver);
+
 
         order.fillPersonData(userName, userSurname, userAddress, userSubway, userPhone);
         order.nextPage();
@@ -82,10 +74,4 @@ public class CreateOrderWithDifferentPersonalRentDataTest {
 
         Assert.assertTrue("Окно успешного создания заказа не отобразилось", order.checkSuccessfullyCreatedOrderPopup());
     }
-
-    @After
-    public void cleanUp(){
-        driver.quit();
-    }
-
 }

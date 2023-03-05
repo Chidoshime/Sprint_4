@@ -1,21 +1,15 @@
 package pages;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import pages.MainPage;
+import src.BaseTest;
 
 import static org.junit.Assert.assertEquals;
 import static src.MainPageFAQ.*;
 
 @RunWith(Parameterized.class)
-public class MainPageTestFAQ {
-
-    private WebDriver driver;
+public class MainPageTestFAQ extends BaseTest {
 
     private final String question;
     private final String questionAnswer;
@@ -39,13 +33,8 @@ public class MainPageTestFAQ {
         };
     }
 
-    @Before
-    public void setUp(){
-        driver = new ChromeDriver();
-    }
-
     @Test
-    public void checkFrequentlyAskedQuestionsText(){
+    public void checkFrequentlyAskedQuestionsText() {
 
         MainPage page = new MainPage(driver);
 
@@ -54,12 +43,7 @@ public class MainPageTestFAQ {
         page.openFAQ(question);
         page.waitForElement(page.getFAQAnswer(question));
 
-        assertEquals("Текст ответа не совпадает",questionAnswer, page.getFAQAnswerText(question));
+        assertEquals("Текст ответа не совпадает", questionAnswer, page.getFAQAnswerText(question));
 
-    }
-
-    @After
-    public void cleanUp(){
-        driver.quit();
     }
 }

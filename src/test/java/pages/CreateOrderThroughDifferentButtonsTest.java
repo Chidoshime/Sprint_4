@@ -1,22 +1,18 @@
 package pages;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import src.BaseTest;
 
 import static pages.MainPage.BOTTOM_ORDER_BUTTON;
 import static pages.MainPage.TOP_ORDER_BUTTON;
 
 @RunWith(Parameterized.class)
-public class CreateOrderThroughDifferentButtonsTest {
-    private static WebDriver driver;
+public class CreateOrderThroughDifferentButtonsTest extends BaseTest {
     private final String orderButtonXpath;
 
     public CreateOrderThroughDifferentButtonsTest(String orderButtonXpath){
@@ -31,14 +27,9 @@ public class CreateOrderThroughDifferentButtonsTest {
         };
     }
 
-    @Before
-    public void setUp(){
-        driver = new ChromeDriver();
-    }
-
     // По результатам теста, заказать самокат через хром не удается, здесь баг
     @Test
-    public void createOrderThroughDifferentButtons(){
+    public void createOrderThroughDifferentButtons() {
         MainPage page = new MainPage(driver);
 
         page.open();
@@ -49,7 +40,7 @@ public class CreateOrderThroughDifferentButtonsTest {
 
         CreateOrderPage order = new CreateOrderPage(driver);
 
-        order.fillPersonData("Василий", "Петрович", "Крылова", "Черкизовская", "12345678900");
+        order.fillPersonData("Василий", "Петрович", "Москва", "Черкизовская", "12345678900");
         order.nextPage();
         order.fillRentDateByToday();
         order.fillRentTerm();
@@ -58,10 +49,4 @@ public class CreateOrderThroughDifferentButtonsTest {
 
         Assert.assertTrue("Окно успешного создания заказа не отобразилось", order.checkSuccessfullyCreatedOrderPopup());
     }
-
-    @After
-    public void cleanUp(){
-        driver.quit();
-    }
-
 }

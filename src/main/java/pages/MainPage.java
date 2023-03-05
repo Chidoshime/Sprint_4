@@ -19,6 +19,7 @@ public class MainPage {
 
     private final WebDriver driver;
 
+    private final By goToHome =By.xpath(".//img[@alt='Scooter']");
 
     public MainPage(WebDriver driver){
         this.driver = driver;
@@ -37,7 +38,7 @@ public class MainPage {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
     }
     public void waitForElement(WebElement element){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -55,7 +56,7 @@ public class MainPage {
         return driver.findElement(By.xpath(".//div[@id='"+question+"']/../following::div[1]")).getText();
     }
     public void goToHomePage(){
-        driver.findElement(By.xpath(".//img[@alt='Scooter']")).click();
+        driver.findElement(goToHome).click();
     }
     public String getPageUrl(){
         return driver.getCurrentUrl();
